@@ -1,0 +1,142 @@
+.perfecty-push-dialog-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: none;
+  z-index: 100000;
+}
+
+.perfecty-push-settings-container, .perfecty-push-dialog-container {
+font-family: "Helvetica", Arial, sans-serif;
+}
+
+.perfecty-push-dialog-box {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  width: 550px;
+  background: #fff;
+  padding: 15px;
+  border: 1px solid rgb(226 232 240);
+    border-radius: 0.25rem;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  margin: 2em auto;
+  text-align: center;
+}
+
+@media only screen and (max-width: 370px) {
+  .perfecty-push-dialog-box {
+    width: 320px;
+    flex-wrap: wrap;
+  }
+}
+
+@media only screen and (min-width: 370px) and (max-width: 425px) {
+  .perfecty-push-dialog-box {
+    width: 350px;
+    flex-wrap: wrap;
+  }
+}
+
+.perfecty-push-dialog-box .perfecty-push-dialog-icon {
+  width: 100px;
+}
+
+.perfecty-push-dialog-container .perfecty-push-dialog-form .perfecty-push-dialog-title {
+  margin: 20px 0;
+}
+
+.perfecty-push-dialog-container .perfecty-push-dialog-form button {
+  margin: 5px 10px;
+  font-size: 1em;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: none;
+  border-radius: 0;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  letter-spacing: 0.0222em;
+  line-height: 1.25;
+  opacity: 1;
+  padding: 1em 1.2em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: opacity 0.15s linear;
+}
+
+.perfecty-push-dialog-container .perfecty-push-dialog-form #perfecty-push-dialog-cancel {
+  background-color: #fff;
+  color: #000;
+  border-radius: 0.25rem;
+  	font-size: 1rem;
+  text-transform:none;
+}
+
+.perfecty-push-dialog-container .perfecty-push-dialog-form #perfecty-push-dialog-subscribe {
+  background-color: #000;
+  color: #fff;
+  border-radius: 0.25rem;
+  	font-size: 1rem;
+   text-transform:none;
+}
+
+.perfecty-push-settings-container {
+  z-index: 100000;
+  display: none;
+}
+
+.perfecty-push-settings-container #perfecty-push-settings-form {
+  display: none;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.perfecty-push-settings-container #perfecty-push-settings-form label {
+  display: inline;
+}
+
+.perfecty-push-settings-container {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+}
+
+.perfecty-push-settings-container #perfecty-push-settings-open {
+  height: 56px;
+  width: 56px;
+  background-color: transparent;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  box-sizing: border-box;
+  box-shadow: none;
+}
+
+.perfecty-push-settings-container #perfecty-push-settings-open svg {
+  color: #fff;
+  padding: 16px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #000;
+  transition: padding 0.1s ease-in-out;
+  cursor: pointer;
+  fill: #fff;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.perfecty-push-settings-container #perfecty-push-settings-open svg:hover,
+.perfecty-push-settings-container #perfecty-push-settings-open svg:focus {
+  padding: 12px;
+}
+
