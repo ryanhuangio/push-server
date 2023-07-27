@@ -6,12 +6,8 @@ Version: 1.0
 Author: Ryan Huang
 */
 
-function hello_world_message() {
-	exit;
-}
-add_action('wp', 'hello_world_message');
-
-function push_server_helper_remove_menu_pages() {
+function push_server_helper_remove_menu_pages()
+{
     remove_menu_page('index.php'); // Dashboard
     remove_menu_page('edit.php'); // Posts
     remove_menu_page('upload.php'); // Media
@@ -26,9 +22,10 @@ function push_server_helper_remove_menu_pages() {
     remove_menu_page('edit-comments.php');
 }
 add_action('admin_menu', 'push_server_helper_remove_menu_pages');
-add_filter( 'show_admin_bar', '__return_false' );
+add_filter('show_admin_bar', '__return_false');
 
-function dashboard_redirect() {
+function dashboard_redirect()
+{
     wp_redirect(admin_url('admin.php?page=perfecty-push'));
 }
 add_action('load-index.php', 'dashboard_redirect');
@@ -36,62 +33,72 @@ add_action('load-index.php', 'dashboard_redirect');
 
 add_action('admin_head', 'webroom_add_css_js_to_admin');
 
-function webroom_add_css_js_to_admin() {
-	echo '<style>
-  #wpfooter {display:none}
-  .notice-notice {display:none}
-#adminmenuwrap {
-    position: relative !important;
-top:-13px;
-}
-#wp-admin-bar-site-name {
-display:none;
-}
-#wp-admin-bar-wp-logo {
-display:none;
-}
-#wp-admin-bar-comments {
-display:none;
-}
-#wp-admin-bar-new-content {
-display:none;
-}
-		</style>';
-  echo '<script>
-  	/* Your js code here */
-  </script>';
+function webroom_add_css_js_to_admin()
+{
+    echo '<style>
+    #wpfooter {
+        display: none;
+      }
+      
+      .notice-notice {
+        display: none;
+      }
+      
+      #adminmenuwrap {
+        position: relative !important;
+        top: -13px;
+      }
+      
+      #wp-admin-bar-site-name {
+        display: none;
+      }
+      
+      #wp-admin-bar-wp-logo {
+        display: none;
+      }
+      
+      #wp-admin-bar-comments {
+        display: none;
+      }
+      
+      #wp-admin-bar-new-content {
+        display: none;
+      }      
+        </style>';
 }
 
 // Add a menu item to the WordPress admin menu
-function push_server_menu() {
+function push_server_menu()
+{
     add_menu_page(
         'Push Server',     // Page title
         'Push Server',     // Menu title
         'manage_options',  // Capability required to access the menu
         'push-server',     // Menu slug
-	'push_server_page', // Callback function to render the page
-	'dashicons-megaphone', 1
-   );
+        'push_server_page', // Callback function to render the page
+        'dashicons-megaphone',
+        1
+    );
     add_submenu_page('push-server', 'Logout', 'Logout', 'read', 'push-logout', 'push_logout_page');
 }
 
-function push_server_page() {
+function push_server_page()
+{
     $site_url = esc_url(home_url('/')); // Get the site URL
 
-    // Code snippet to be displayed
     $code = '<link rel="stylesheet" id="perfecty-push-css" href="' . $site_url . 'wp-content/plugins/push-server/style.css" media="all" />' . "\n";
     $code .= '<script>
         window.PerfectyPushOptions = {
             path: "' . $site_url . 'wp-content/plugins/perfecty-push-notifications/public/js",
             dialogTitle: "Do you want to receive notifications?",
-            dialogSubmit: "Continue",
+                         dialogSubmit: "Continue",
             dialogCancel: "Not now",
             settingsTitle: "Notifications preferences",
             settingsOptIn: "I want to receive notifications",
             settingsUpdateError: "Could not change the preference, try again",
             serverUrl: "' . $site_url . 'wp-json/perfecty-push",
             vapidPublicKey: "'. PERFECTY_PUSH_VAPID_PUBLIC_KEY .'",
-            token: "'.wp_create_nonce( 'wp_rest' ).'",
+            token: "'.wp_create_nonce('wp_rest').'",
             tokenHeader: "X-WP-Nonce",
             enabled: true,
             unregisterConflicts: false,
@@ -113,20 +120,53 @@ function push_server_page() {
     echo '<textarea style="width:calc(100% - 40px); height:300px; padding:20px; border-radius:0.25em;">' . htmlspecialchars($code) . '</textarea>';
 }
 
+function hello_world_message()
+{
+    $code = '<html><head><title>Push Server</title></head><body>';
+    $code .= '<link rel="stylesheet" id="perfecty-push-css" href="' . $site_url . 'wp-content/plugins/push-server/style.css" media="all" />' . "\n";
+    $code .= '<script>
+        window.PerfectyPushOptions = {
+            path: "' . $site_url . 'wp-content/plugins/perfecty-push-notifications/public/js",
+            dialogTitle: "Do you want to receive notifications?",
+                         dialogSubmit: "Continue",
+            dialogCancel: "Not now",
+            settingsTitle: "Notifications preferences",
+            settingsOptIn: "I want to receive notifications",
+            settingsUpdateError: "Could not change the preference, try again",
+            serverUrl: "' . $site_url . 'wp-json/perfecty-push",
+            vapidPublicKey: "'. PERFECTY_PUSH_VAPID_PUBLIC_KEY .'",
+            token: "'.wp_create_nonce('wp_rest').'",
+            tokenHeader: "X-WP-Nonce",
+            enabled: true,
+            unregisterConflicts: false,
+            serviceWorkerScope: "/perfecty/push",
+            loggerLevel: "error",
+            loggerVerbose: false,
+            hideBellAfterSubscribe: false,
+            askPermissionsDirectly: false,
+            unregisterConflictsExpression: "(OneSignalSDKWorker|wonderpush-worker-loader|webpushr-sw|subscribers-com\/firebase-messaging-sw|gravitec-net-web-push-notifications|push_notification_sw)",
+            promptIconUrl: "",
+            visitsToDisplayPrompt: 0
+        }
+    </script>' . "\n";
+    $code .= '<script src="' . $site_url . 'wp-content/plugins/perfecty-push-notifications/public/js/perfecty-push-sdk/dist/perfecty-push-sdk.min.js?ver=1.6.2" id="perfecty-push-js"></script>';
+    $code .= '</body></html>';
+    echo $code;
+    exit;
+}
+add_action('wp', 'hello_world_message');
 
-
-
-function push_logout_page() {
-	wp_logout();
-	wp_redirect(wp_login_url());
+function push_logout_page()
+{
+    wp_logout();
+    wp_redirect(wp_login_url());
     exit;
 }
 
 add_action('admin_menu', 'push_server_menu');
 
-
-
-function my_custom_login_logo() {
+function my_custom_login_logo()
+{
     echo '<style>
         #login h1 { display: none; }
         #nav, #backtoblog { display: none; }
@@ -157,5 +197,5 @@ function my_custom_login_logo() {
         }
         </style>';
 }
-add_filter('login_head', 'my_custom_login_logo');
 
+add_filter('login_head', 'my_custom_login_logo');
